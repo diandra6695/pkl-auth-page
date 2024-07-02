@@ -23,18 +23,26 @@ type Login = {
 export default function Home() {
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
     validationSchema: Yup.object({
+      name: Yup.string().required("Name is required"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      password: Yup.string().required("Password is required"),
+      password: Yup.string()
+        .required("Password is Required")
+        .min(8, "Password minimum 8 character"),
+      confirmPassword: Yup.string()
+        .required("Confirm password is Required")
+        .oneOf([Yup.ref("password"), ""], "Passwords must match"),
     }),
     onSubmit: (values) => {
-      toast.success("Login Success", {
-        description: "email : " + values.email,
+      toast.success("Register Success", {
+        description: "name : " + values.name + ", " + "email : " + values.email,
       });
     },
   });
@@ -61,7 +69,7 @@ export default function Home() {
               width={60}
               height={60}
             />
-            <h3 className="font-bold text-xl">Welcome Back!</h3>
+            <h3 className="font-bold text-xl">Lets get started!</h3>
             <p className="text-sm text-gray-500">
               Enter your details to get started
             </p>
@@ -72,6 +80,16 @@ export default function Home() {
               onSubmit={formik.handleSubmit}
               action=""
             >
+              <Label htmlFor="name">Nama</Label>
+              <Input
+                type="text"
+                name="name"
+                placeholder="masukkan nama anda"
+                onChange={handleChange}
+              />
+              {formik.touched.name && formik.errors.name ? (
+                <p className="text-red-500 text-xs">{formik.errors.name}</p>
+              ) : null}
               <Label htmlFor="email">Email</Label>
               <Input
                 type="email"
@@ -83,7 +101,6 @@ export default function Home() {
                 <p className="text-red-500 text-xs">{formik.errors.email}</p>
               ) : null}
               <Label htmlFor="Password">Password</Label>
-
               <Input
                 type="password"
                 name="password"
@@ -93,13 +110,26 @@ export default function Home() {
               {formik.touched.password && formik.errors.password ? (
                 <p className="text-red-500 text-xs">{formik.errors.password}</p>
               ) : null}
+              <Label htmlFor="Password">Confirm Password</Label>
+              <Input
+                type="password"
+                name="confirmPassword"
+                onChange={handleChange}
+                placeholder="masukkan konfirmasi password"
+              />
+              {formik.touched.confirmPassword &&
+              formik.errors.confirmPassword ? (
+                <p className="text-red-500 text-xs">
+                  {formik.errors.confirmPassword}
+                </p>
+              ) : null}
               <Button type="submit" className="w-full">
-                Login
+                Register
               </Button>
             </form>
             <div className="w-full ">
               <p className="text-sm mb-2 text-center text-gray-500">
-                atau masuk dengan
+                atau register dengan
               </p>
               <div className="flex w-full gap-4">
                 <Button
@@ -133,9 +163,9 @@ export default function Home() {
           </CardContent>
         </Card>
         <div className="text-sm mt-2 text-center text-gray-500">
-          {"Don't"} have an account?{" "}
-          <Link href="/register" className="text-violet-600">
-            Register
+          Alredy have an account?{" "}
+          <Link href="/" className="text-violet-600">
+            Login
           </Link>
         </div>
       </div>
