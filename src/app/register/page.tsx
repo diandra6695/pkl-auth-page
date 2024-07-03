@@ -70,10 +70,10 @@ export default function Register() {
     formik.setFieldValue(name, value);
   };
   return (
-    <div className="container mx-auto overflow-x-hidden">
+    <div className="md:container md:mx-auto overflow-x-hidden">
       <div className="w-full text-xl h-screen flex flex-col justify-center items-center">
         <div className="bg-violet-600 overflow-hidden blur-3xl rounded-full opacity-10 -z-30 md:w-[35rem] md:h-[35rem] w-[25rem] h-[25rem] absolute"></div>
-        <Card className="md:w-[26rem] w-[20rem] md:p-5 p-1">
+        <Card className="md:w-[26rem] md:h-auto h-screen flex flex-col justify-center w-full md:p-5 p-1">
           <CardHeader className="">
             <Image
               className="mb-3"
@@ -120,7 +120,7 @@ export default function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
                   >
                     <Eye size={25} />
                   </Button>
@@ -129,7 +129,7 @@ export default function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
                   >
                     <EyeSlash size={25} />
                   </Button>
@@ -151,7 +151,7 @@ export default function Register() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
                   >
                     <Eye size={25} />
                   </Button>
@@ -160,7 +160,7 @@ export default function Register() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
                   >
                     <EyeSlash size={25} />
                   </Button>
@@ -215,10 +215,16 @@ export default function Register() {
                 </Button>
               </div>
             </div>
+            <div className="text-sm md:hidden mt-2 text-center text-gray-500">
+              have an account?{" "}
+              <Link href="/" className="text-violet-600">
+                Login
+              </Link>
+            </div>
           </CardContent>
         </Card>
-        <div className="text-sm mt-2 text-center text-gray-500">
-          Alredy have an account?{" "}
+        <div className="text-sm hidden md:block mt-2 text-center text-gray-500">
+          have an account?{" "}
           <Link href="/" className="text-violet-600">
             Login
           </Link>

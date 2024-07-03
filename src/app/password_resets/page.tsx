@@ -38,10 +38,10 @@ const PasswordResets = () => {
     formik.setFieldValue(name, value);
   };
   return (
-    <div className="container mx-auto overflow-x-hidden">
+    <div className="md:container md:mx-auto overflow-x-hidden">
       <div className="w-full text-xl h-screen flex flex-col justify-center items-center">
         <div className="bg-violet-600 overflow-hidden blur-3xl rounded-full opacity-10 -z-30 md:w-[35rem] md:h-[35rem] w-[25rem] h-[25rem] absolute"></div>
-        <Card className="md:w-[26rem] w-[20rem] md:p-5 p-1">
+        <Card className="md:w-[26rem] md:h-auto h-screen flex flex-col justify-center w-full md:p-5 p-1">
           <CardHeader className="">
             <Image
               className="mb-3"
