@@ -15,30 +15,17 @@ import Link from "next/link";
 import { ChangeEventHandler, useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
-
-type Login = {
-  email: string;
-  password: string;
-};
-
-export default function Register() {
+const UpdatePassword = () => {
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<Boolean>(false);
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string()
-        .required("Name is required")
-        .min(3, "Name Too short. Minimum 3 character"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
       password: Yup.string()
         .required("Password is Required")
         .min(8, "Password minimum 8 character"),
@@ -47,17 +34,10 @@ export default function Register() {
         .oneOf([Yup.ref("password"), ""], "Passwords must match"),
     }),
     onSubmit: (values) => {
-      toast.success("Register Success", {
-        description: "name : " + values.name + ", " + "email : " + values.email,
-      });
+      setIsLoading(true);
+      toast.success("Update Password Success");
     },
   });
-  const handleClickGoogle = () => {
-    alert("login dengan google");
-  };
-  const handleClickApple = () => {
-    alert("login dengan apple");
-  };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
     formik.setFieldValue(name, value);
@@ -75,9 +55,9 @@ export default function Register() {
               width={60}
               height={60}
             />
-            <h3 className="font-bold text-xl">Lets get started!</h3>
+            <h3 className="font-bold text-xl">Update Password</h3>
             <p className="text-sm text-gray-500">
-              Enter your details to get started
+              Please enter your new password
             </p>
           </CardHeader>
           <CardContent>
@@ -86,26 +66,6 @@ export default function Register() {
               onSubmit={formik.handleSubmit}
               action=""
             >
-              <Label htmlFor="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                onChange={handleChange}
-              />
-              {formik.touched.name && formik.errors.name ? (
-                <p className="text-red-500 text-xs">{formik.errors.name}</p>
-              ) : null}
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                onChange={handleChange}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <p className="text-red-500 text-xs">{formik.errors.email}</p>
-              ) : null}
               <Label htmlFor="Password">Password</Label>
               <div className="relative">
                 {showPassword ? (
@@ -172,51 +132,14 @@ export default function Register() {
                 </p>
               ) : null}
               <Button type="submit" className="w-full">
-                Register
+                Update Password
               </Button>
             </form>
-            <div className="w-full ">
-              <p className="text-sm mb-2 text-center text-gray-500">
-                Or register with
-              </p>
-              <div className="flex w-full gap-4">
-                <Button
-                  onClick={handleClickApple}
-                  className="w-full flex gap-2 items-center justify-center"
-                  variant="outline"
-                >
-                  <Image
-                    src={"/assets/icon/apple.svg"}
-                    width={16}
-                    height={16}
-                    alt="apple"
-                  />
-                  Apple
-                </Button>
-                <Button
-                  onClick={handleClickGoogle}
-                  className="w-full flex gap-2 items-center justify-center"
-                  variant="outline"
-                >
-                  <Image
-                    src="/assets/icon/google.svg"
-                    width={16}
-                    height={16}
-                    alt="google"
-                  />
-                  Google
-                </Button>
-              </div>
-            </div>
           </CardContent>
         </Card>
-        <div className="text-sm mt-2 text-center text-gray-500">
-          Alredy have an account?{" "}
-          <Link href="/" className="text-violet-600">
-            Login
-          </Link>
-        </div>
       </div>
     </div>
   );
-}
+};
+
+export default UpdatePassword;

@@ -11,9 +11,10 @@ import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 
 type Login = {
   email: string;
@@ -21,6 +22,8 @@ type Login = {
 };
 
 export default function Home() {
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -76,20 +79,48 @@ export default function Home() {
               <Input
                 type="email"
                 name="email"
-                placeholder="masukkan email anda"
+                placeholder="Enter your email"
                 onChange={handleChange}
               />
               {formik.touched.email && formik.errors.email ? (
                 <p className="text-red-500 text-xs">{formik.errors.email}</p>
               ) : null}
-              <Label htmlFor="Password">Password</Label>
-
-              <Input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                placeholder="masukkan password anda"
-              />
+              <div className="flex  justify-between items-center">
+                <Label htmlFor="Password">Password</Label>
+                <Link
+                  className="text-xs underline text-violet-500"
+                  href="/password_resets"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+              <div className="relative">
+                {showPassword ? (
+                  <Button
+                    onClick={() => setShowPassword(!showPassword)}
+                    type="button"
+                    variant="ghost"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                  >
+                    <Eye size={25} />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setShowPassword(!showPassword)}
+                    type="button"
+                    variant="ghost"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] translate-x-[13.5rem] translate-y-2 text-slate-500"
+                  >
+                    <EyeSlash size={25} />
+                  </Button>
+                )}
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                />
+              </div>
               {formik.touched.password && formik.errors.password ? (
                 <p className="text-red-500 text-xs">{formik.errors.password}</p>
               ) : null}
@@ -99,7 +130,7 @@ export default function Home() {
             </form>
             <div className="w-full ">
               <p className="text-sm mb-2 text-center text-gray-500">
-                atau masuk dengan
+                Or login with
               </p>
               <div className="flex w-full gap-4">
                 <Button
