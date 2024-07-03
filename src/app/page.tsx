@@ -107,7 +107,7 @@ export default function Home() {
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[18rem] translate-y-2 text-slate-500"
                   >
                     <Eye size={25} />
                   </Button>
@@ -116,7 +116,7 @@ export default function Home() {
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
                     variant="ghost"
-                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[24rem] translate-y-2 text-slate-500"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[18rem] translate-y-2 text-slate-500"
                   >
                     <EyeSlash size={25} />
                   </Button>
