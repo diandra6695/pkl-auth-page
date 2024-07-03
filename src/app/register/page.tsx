@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import user from "@/utils/user";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { useFormik } from "formik";
 import Image from "next/image";
@@ -22,6 +23,7 @@ type Login = {
 };
 
 export default function Register() {
+  const data = user;
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<Boolean>(false);
@@ -47,6 +49,11 @@ export default function Register() {
         .oneOf([Yup.ref("password"), ""], "Passwords must match"),
     }),
     onSubmit: (values) => {
+      //memasukkan value dari formik ke variable data
+      if (data.email === values.email && data.password === values.password) {
+        toast.error("Email already registered");
+        return;
+      }
       toast.success("Register Success", {
         description: "name : " + values.name + ", " + "email : " + values.email,
       });

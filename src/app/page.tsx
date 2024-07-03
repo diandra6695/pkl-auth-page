@@ -15,6 +15,7 @@ import { ChangeEventHandler, useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
+import user from "@/utils/user";
 
 type Login = {
   email: string;
@@ -22,6 +23,7 @@ type Login = {
 };
 
 export default function Home() {
+  const data = user;
   const [showPassword, setShowPassword] = useState<Boolean>(false);
 
   const formik = useFormik({
@@ -36,9 +38,14 @@ export default function Home() {
       password: Yup.string().required("Password is required"),
     }),
     onSubmit: (values) => {
-      toast.success("Login Success", {
-        description: "email : " + values.email,
-      });
+      if (data.email === values.email && data.password === values.password) {
+        toast.success("Login Success", {
+          description: "email : " + values.email,
+        });
+        return;
+      }
+      toast.error("Wrong email or password");
+      return;
     },
   });
   const handleClickGoogle = () => {
