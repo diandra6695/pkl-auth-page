@@ -11,9 +11,11 @@ import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
+import user from "@/utils/user";
 
 type Login = {
   email: string;
@@ -21,6 +23,9 @@ type Login = {
 };
 
 export default function Home() {
+  const data = user;
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -33,9 +38,14 @@ export default function Home() {
       password: Yup.string().required("Password is required"),
     }),
     onSubmit: (values) => {
-      toast.success("Login Success", {
-        description: "email : " + values.email,
-      });
+      if (data.email === values.email && data.password === values.password) {
+        toast.success("Login Success", {
+          description: "email : " + values.email,
+        });
+        return;
+      }
+      toast.error("Wrong email or password");
+      return;
     },
   });
   const handleClickGoogle = () => {
@@ -49,10 +59,10 @@ export default function Home() {
     formik.setFieldValue(name, value);
   };
   return (
-    <div className="container mx-auto overflow-x-hidden">
+    <div className="md:container md:mx-auto overflow-x-hidden">
       <div className="w-full text-xl h-screen flex flex-col justify-center items-center">
         <div className="bg-violet-600 overflow-hidden blur-3xl rounded-full opacity-10 -z-30 md:w-[35rem] md:h-[35rem] w-[25rem] h-[25rem] absolute"></div>
-        <Card className="md:w-[26rem] w-[20rem] md:p-5 p-1">
+        <Card className="md:w-[26rem] md:h-auto h-screen flex flex-col justify-center w-full md:p-5 p-1">
           <CardHeader className="">
             <Image
               className="mb-3"
@@ -76,20 +86,48 @@ export default function Home() {
               <Input
                 type="email"
                 name="email"
-                placeholder="masukkan email anda"
+                placeholder="Enter your email"
                 onChange={handleChange}
               />
               {formik.touched.email && formik.errors.email ? (
                 <p className="text-red-500 text-xs">{formik.errors.email}</p>
               ) : null}
-              <Label htmlFor="Password">Password</Label>
-
-              <Input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                placeholder="masukkan password anda"
-              />
+              <div className="flex  justify-between items-center">
+                <Label htmlFor="Password">Password</Label>
+                <Link
+                  className="text-xs underline text-violet-500"
+                  href="/password_resets"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+              <div className="relative">
+                {showPassword ? (
+                  <Button
+                    onClick={() => setShowPassword(!showPassword)}
+                    type="button"
+                    variant="ghost"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[18rem] translate-y-2 text-slate-500"
+                  >
+                    <Eye size={25} />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setShowPassword(!showPassword)}
+                    type="button"
+                    variant="ghost"
+                    className="absolute p-0 px-2 h-fit hover:bg-white bg-white md:translate-x-[17.5rem] sm:translate-x-[33.5rem] sm:ml-0 ml-[18rem] translate-y-2 text-slate-500"
+                  >
+                    <EyeSlash size={25} />
+                  </Button>
+                )}
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                />
+              </div>
               {formik.touched.password && formik.errors.password ? (
                 <p className="text-red-500 text-xs">{formik.errors.password}</p>
               ) : null}
@@ -99,7 +137,7 @@ export default function Home() {
             </form>
             <div className="w-full ">
               <p className="text-sm mb-2 text-center text-gray-500">
-                atau masuk dengan
+                Or login with
               </p>
               <div className="flex w-full gap-4">
                 <Button
@@ -130,9 +168,15 @@ export default function Home() {
                 </Button>
               </div>
             </div>
+            <div className="text-sm md:hidden mt-2 text-center text-gray-500">
+              {"Don't"} have an account?{" "}
+              <Link href="/register" className="text-violet-600">
+                Register
+              </Link>
+            </div>
           </CardContent>
         </Card>
-        <div className="text-sm mt-2 text-center text-gray-500">
+        <div className="text-sm hidden md:block mt-2 text-center text-gray-500">
           {"Don't"} have an account?{" "}
           <Link href="/register" className="text-violet-600">
             Register
